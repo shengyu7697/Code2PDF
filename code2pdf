@@ -1,0 +1,21 @@
+#!/bin/bash
+# sudo apt install enscript
+
+OUTPUT_FILE="code.pdf"
+
+if [ -n "$1" ]; then
+	# Convert the source code to *.ps file, then convert it to *.pdf file
+	enscript --color=1 --line-numbers=1 --highlight=cpp --font=Courier8 --header='$n|%W|Page $% of $=' --tabsize=4 -o - "$1" | ps2pdf - "$OUTPUT_FILE"
+	# --color[=bool]                    開啟顏色
+	# -C[START], --line-numbers[=START] 行號從多少開始
+	# -E[LANG], --highlight[=LANG]      指定c++ language
+	# -f, --font=NAME                   指定字型與大小
+	# -B, --no-header                   設定無頁面標頭
+	# --header='$n %W Page $% of $='    設定標頭印出 檔名 日期 頁碼 總頁碼
+	# --header='$n|%W|Page $% of $='    設定標頭印出 檔名 日期 頁碼 總頁碼 (置左|置中|置右)
+	# -T, --tabsize=NUM                 設定tab size
+
+	echo "Output file: $OUTPUT_FILE"
+else
+	echo "Please key-in filename of source code"
+fi
